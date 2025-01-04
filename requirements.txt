@@ -1,1 +1,2 @@
 wikipedia==1.4.0
+pywikibot==9.6.1
