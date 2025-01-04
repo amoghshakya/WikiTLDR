@@ -11,12 +11,12 @@ def build_dataset(num_articles: int = 10000, batch_size: int = 50, output_file: 
 
     # set language to simple English
     wikipedia.set_lang("simple")
-    random_articles = wikipedia.random(num_articles)
 
     batch: list[dict] = []
     batch_count = 0
 
-    for article in random_articles:
+    for _ in range(num_articles):
+        article = wikipedia.random()
         print(f"Fetching {article}")
 
         input_text = fetch_summaries(article, lang="en")
