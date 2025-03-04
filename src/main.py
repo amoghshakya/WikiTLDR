@@ -1,4 +1,3 @@
-import time
 import sys
 
 import wikipedia    # type: ignore
@@ -39,7 +38,6 @@ def build_dataset(num_articles: int = 10000, batch_size: int = 50, output_file: 
             batch = []
             batch_count += 1
 
-        time.sleep(1)
 
     if batch:
         insert_articles(conn, batch)
