@@ -1,6 +1,7 @@
 import sys
 
-import wikipedia    # type: ignore
+import wikipedia  # type: ignore
+
 from fetch_wikipedia import fetch_summaries
 from queries import init_database, insert_articles
 
@@ -11,17 +12,19 @@ def build_dataset(num_articles: int = 10000, batch_size: int = 50, output_file: 
     # set language to simple English
     wikipedia.set_lang("simple")
 
-    batch: list[dict] = []
+    batch: list[dict[str, str]] = []
     batch_count = 0
 
     for _ in range(num_articles):
-        article = wikipedia.random()
+        article = wikipedia.random()  # fetches a random article name (str)
         print(f"Fetching {article}")
+
+        assert type(article) == str, f"Expected str, got {type(article)}"
 
         input_text = fetch_summaries(article, lang="en")
         target_text = fetch_summaries(article, lang="simple")
 
-        if not input_text:
+        if not input_text or not target_text:
             print(f"Skipping {article} due to issues.")
             continue
 
@@ -37,7 +40,6 @@ def build_dataset(num_articles: int = 10000, batch_size: int = 50, output_file: 
             print(f"Batch {batch_count + 1} inserted into the database.")
             batch = []
             batch_count += 1
-
 
     if batch:
         insert_articles(conn, batch)

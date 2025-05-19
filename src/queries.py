@@ -21,7 +21,7 @@ def init_database(db_name: str = "simple_articles.db") -> sqlite3.Connection:
     return conn
 
 
-def insert_articles(conn: sqlite3.Connection, articles: list[dict]):
+def insert_articles(conn: sqlite3.Connection, articles: list[dict[str, str]]) -> None:
     """
     Insert multiple articles into the database in bulk.
     """
